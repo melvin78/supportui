@@ -34,6 +34,7 @@ export default {
   plugins: [
     '~plugins/axioshelper.js',
     '~plugins/apiservice.js',
+    // '~plugins/upload-digital-ocean.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

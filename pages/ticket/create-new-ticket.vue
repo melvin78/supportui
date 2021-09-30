@@ -83,6 +83,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import aws from "aws-sdk";
 
 export default {
   name: "create-new-ticket",
@@ -96,6 +97,10 @@ export default {
       SelectedEnquiry:'',
       VueEditorShow:false,
       VueEditorContent:'',
+      endpoint: 'https://centrino.nyc3.digitaloceanspaces.com',
+      uploadurl:null,
+      filename:'',
+      filetype:'',
       files: [],
       customToolbar: [
         ["bold", "italic", "underline"],
@@ -126,7 +131,36 @@ export default {
     ...mapActions({
     GetEnquiriesData: 'enquiries/enquiries-service/getEnquiries',
       GetEnquiryCategoryData: 'enquiries/enquiries-service/getEnquiriesCategory'
-    })
+    }),
+    upload() {
+      const aws = require('aws-sdk')
+
+      const spaces = new aws.S3({
+        endpoint:'nyc3.digitaloceanspaces.com',
+        accessKeyId: 'A2G22IBUK6WU5PBTI2B2',
+        secretAccessKey: 'aq7nq1SJmttMjgBUfs0sK/h1op8R71bHTblFbM5IeSk'
+      })
+
+      const params = {
+        Bucket: 'centrino',
+        Key: this.filename,
+        Expires: 60 * 3, // Expires in 3 minutes
+        ContentType: this.filetype,
+        ACL: 'public-read', // Remove this to make the file private
+      }
+
+      this.uploadurl=spaces.getSignedUrl('putObject',params)
+
+      fetch(this.uploadurl, {
+        method: 'PUT',
+        body: this.files[0],
+        headers: {
+          'Content-Type': this.files[0].type,
+          'x-amz-acl': 'public-read',
+        }
+      }).then((res)=>{console.log(res)})
+        .catch((c)=>{console.log(c)})
+    }
   },
   computed:{
     ...mapGetters({
