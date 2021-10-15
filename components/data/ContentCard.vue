@@ -113,6 +113,25 @@ export default {
             "</svg>\n",
           btnval: "Open Skype Chat",
           redirect: "/ticket/skype-chat"
+        },
+        {
+          id:3,
+          cardTitle:"Provide Feedback",
+          desc:"If you would like to give a feedback on our services or raise a complaint or issue dont hesitate to contact us",
+          svg:"<svg width=\"77\" height=\"87\" viewBox=\"0 0 77 87\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+              "<path d=\"M77 43.6723H62.9445L61.0936 41.7953H47.5385L45.5277 43.6794L38.3316 65.3587L45.5277 87H76.9811V43.6723H77Z\" fill=\"#FBCA14\"/>\n" +
+              "<path d=\"M31.1594 0L22.769 22.9692L31.1594 43.6796H49.1256L62.9182 59.2671V43.6796V0H31.1594Z\" fill=\"#008475\"/>\n" +
+              "<path d=\"M31.1594 43.6796V1.52588e-05H0V43.6796H13.7449L15.8444 45.5175H29.6935L31.1594 43.6794\" fill=\"#00A98F\"/>\n" +
+              "<path d=\"M45.9849 13.7876L31.1594 29.8486L29.3436 24.1073L31.1594 22.2528L31.1739 22.2689L42.6716 9.86583L45.9849 13.7876Z\" fill=\"#E2E8ED\"/>\n" +
+              "<path d=\"M31.1594 22.2528V29.8487L23.4421 21.1991L26.8354 17.3642L31.1594 22.2528Z\" fill=\"#F2F3F4\"/>\n" +
+              "<path d=\"M45.5275 43.6796V87H13.7449V28.0847L27.5278 43.6796H45.5275Z\" fill=\"#FED843\"/>\n" +
+              "<path d=\"M47.9263 62.6486V68.0703H45.5275L44.837 65.3594L45.5275 62.6486H47.9263Z\" fill=\"#E2E8ED\"/>\n" +
+              "<path d=\"M33.5341 62.6481H38.3315V68.0698H33.5341V62.6481Z\" fill=\"#F2F3F4\"/>\n" +
+              "<path d=\"M43.1289 62.6488H45.5277V68.0705H43.1289V62.6488Z\" fill=\"#F2F3F4\"/>\n" +
+              "<path d=\"M52.7238 62.6488H57.5211V68.0705H52.7238V62.6488Z\" fill=\"#E2E8ED\"/>\n" +
+              "</svg>\n",
+          btnval: "Open Skype Chat",
+          redirect: "/ticket/skype-chat"
         }
 
 

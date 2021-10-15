@@ -9,7 +9,7 @@ import {mapActions} from 'vuex'
 
 export default {
   name: "callback",
-  layout: "normal",
+  layout: "other",
   data() {
     return {
       usrManager: null
@@ -26,6 +26,7 @@ export default {
       response_mode: "query"
     }).signinRedirectCallback()
       .then((user) => {
+        this.$auth.$storage.setUniversal('testprofile',user)
         this.$auth.$storage.setUniversal('authenticatedUser',user.profile)
         this.$auth.$storage.setUniversal('accesstoken',user.access_token)
         this.$auth.$storage.setLocalStorage('isLoggedin',true)

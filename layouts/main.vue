@@ -24,15 +24,16 @@
 
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
-          <v-avatar
-            class="hidden-sm-and-down"
-            color="grey darken-1 shrink"
-            size="32"
-            v-bind="attrs"
-            v-on="on"
-          >
+<!--          <v-avatar-->
+<!--            class="hidden-sm-and-down"-->
+<!--            color="grey darken-1 shrink"-->
+<!--            size="32"-->
+<!--            v-bind="attrs"-->
+<!--            v-on="on"-->
+<!--          >-->
 
-          </v-avatar>
+<!--          </v-avatar>-->
+
         </template>
         <v-list>
           <v-list-item
@@ -82,7 +83,7 @@ export default {
 
       {
         id: 2,
-        desc: 'Previous Tickets',
+        desc: 'Ticket History',
         link: '/account/previous-tickets'
 
 
@@ -94,6 +95,7 @@ export default {
 
 
       },
+
 
     ],
   }),

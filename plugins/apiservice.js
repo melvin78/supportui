@@ -6,9 +6,10 @@ export default (ctx, inject) => {
 
   const repositories = {
       GetEnquiries: repositoryWithAxios('/Enquiry/enquiries/get-enquiries'),
-      GetEnquiryCategory: repositoryWithAxios('/EnquiryCategory/getEnquiryCategory')
-
-
+      GetEnquiryCategory: repositoryWithAxios('/EnquiryCategory/getEnquiryCategory'),
+      SaveTicketInformation: repositoryWithAxios('/Ticket/createTicket'),
+      GetTicketReportsByUser: repositoryWithAxios('/TicketReportClient/getTicketReportsbyUserId'),
+      GetTicketReportsByTicketNo: repositoryWithAxios('/TicketReportClient/getTicketReportsbyTicketno')
   }
   inject('postRepository', repositories)
 

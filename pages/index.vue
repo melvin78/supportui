@@ -41,7 +41,7 @@ import {UserManager} from 'oidc-client';
 export default {
 
   name: "index",
-  layout: "normal",
+  layout: "other",
   data(){
     return{
       userMgr:null,
