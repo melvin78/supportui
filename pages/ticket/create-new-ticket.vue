@@ -4,12 +4,12 @@
     <hr class="my-3">
     <v-col cols="6">
       <v-select
-        :items="AllEnquiriesData"
         v-model="SelectedEnquiry"
-        item-value="id"
-        item-text="enquiryType"
-        label="What Product Are You Having Problems With?"
+        :items="AllEnquiriesData"
         dense
+        item-text="enquiryType"
+        item-value="id"
+        label="What Product Are You Having Problems With?"
         outlined
         @change="nextStep"
       ></v-select>
@@ -18,12 +18,12 @@
     <v-col v-if="EnquiryCategorySelect" cols="6">
       <v-select
 
-        :items="AllEnquiryCategoryData"
         v-model="SelectedEnquiryCategoryData"
-        item-value="id"
-        item-text="enquiryCategoryVal"
-        label="Choose from the list which problem you might be experiencing"
+        :items="AllEnquiryCategoryData"
         dense
+        item-text="enquiryCategoryVal"
+        item-value="id"
+        label="Choose from the list which problem you might be experiencing"
         outlined
         @change="VueEditorShow=true"
       ></v-select>
@@ -39,17 +39,17 @@
     />
 
     <v-file-input
-      class="mt-3"
       v-if="VueEditorShow"
       v-model="files"
+      :show-size="1000"
+      class="mt-3"
       color="deep-purple accent-4"
       counter
       label="You can attach multiple screenshots of the error messages"
       multiple
+      outlined
       placeholder="Select your files"
       prepend-icon="mdi-paperclip"
-      outlined
-      :show-size="1000"
     >
       <template v-slot:selection="{ index, text }">
         <v-chip
@@ -72,21 +72,22 @@
     </v-file-input>
     <div v-if="VueEditorShow" class="text-center mt-3">
       <v-btn
-        x-large
         color="primary"
         dark
+        x-large
         @click="SaveEnquiry"
       >
         Submit Issue
       </v-btn>
     </div>
-    <loading-overlay-form :value-over="loadingOverlay" info="Recording your issue and notifying one of our agents please wait..."/>
+    <loading-overlay-form :value-over="loadingOverlay"
+                          info="Recording your issue and notifying one of our agents please wait..."/>
   </section>
 </template>
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import aws from "aws-sdk";
+
 import LoadingOverlayForm from "../../components/data/loading-overlay-form";
 
 export default {
@@ -102,13 +103,15 @@ export default {
       SelectedEnquiry: '',
       VueEditorShow: false,
       VueEditorContent: '',
-      SelectedEnquiryCategoryData:'',
-      loadingOverlay:false,
+      SelectedEnquiryCategoryData: '',
+      loadingOverlay: false,
       endpoint: 'https://centrino.nyc3.digitaloceanspaces.com',
       uploadurl: null,
       filename: '',
       filetype: '',
       files: [],
+      Attachment:[],
+      random: [],
       customToolbar: [
         ["bold", "italic", "underline"],
         [{
@@ -134,15 +137,26 @@ export default {
       })
     },
 
+
     ...mapActions({
       GetEnquiriesData: 'enquiries/enquiries-service/getEnquiries',
       GetEnquiryCategoryData: 'enquiries/enquiries-service/getEnquiriesCategory',
       UploadEnquiry: 'tickets/ticket-service/saveEnquiry',
-      ShareTicketNo:'tickets/ticket-info/SaveTicketNo',
-      ShareUserName:'tickets/ticket-info/SaveUsername',
+      ShareTicketNo: 'tickets/ticket-info/SaveTicketNo',
+      ShareUserName: 'tickets/ticket-info/SaveUsername',
     }),
-   async upload() {
+
+
+    async finalupload() {
+
+      for (let i = 0; i < this.files.length; i++) {
+       await this.upload(this.files[i], i)
+      }
+    },
+
+   async upload(file, i) {
       const aws = require('aws-sdk')
+
 
       const spaces = new aws.S3({
         endpoint: 'nyc3.digitaloceanspaces.com',
@@ -150,25 +164,27 @@ export default {
         secretAccessKey: 'aq7nq1SJmttMjgBUfs0sK/h1op8R71bHTblFbM5IeSk'
       })
 
+
+
       const params = {
         Bucket: 'centrino',
-        Key: `${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.SelectedEnquiryCategoryData}`,
+        Key: `centrino-support-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
         Expires: 60 * 3, // Expires in 3 minutes
-        ContentType: this.files[0].type,
+        ContentType: file.type,
         ACL: 'public-read', // Remove this to make the file private
       }
 
-      this.uploadurl = spaces.getSignedUrl('putObject', params)
 
-      fetch(this.uploadurl, {
+
+      fetch(spaces.getSignedUrl('putObject', params), {
         method: 'PUT',
-        body: this.files[0],
+        body: file,
         headers: {
-          'Content-Type': this.files[0].type,
+          'Content-Type': file.type,
           'x-amz-acl': 'public-read',
         }
       }).then((res) => {
-        console.log(res)
+        console.log(res.url)
       })
         .catch((c) => {
           console.log(c)
@@ -176,29 +192,41 @@ export default {
     },
 
     SaveEnquiry() {
-      this.loadingOverlay=true
-      let payload = {
-        CustomerId:this.$auth.$storage.getUniversal('authenticatedUser').sub,
-        EnquiryCategoryId:this.SelectedEnquiryCategoryData,
-        FirstMessage:this.VueEditorContent,
-        SaccoId:this.$auth.$storage.getUniversal('authenticatedUser').sacco_id,
-        Attachments:`${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.SelectedEnquiryCategoryData}`
+      for (let i = 0; i < this.files.length; i++) {
+        this.random.push(Math.floor(1000 + Math.random() * 9000))
+      }
+
+      for (let i = 0; i < this.files.length; i++) {
+        this.Attachment.push({
+          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`
+        })
       }
 
 
-      this.UploadEnquiry(payload).then(()=>{
+      this.loadingOverlay = true
+      let payload = {
+        CustomerId: this.$auth.$storage.getUniversal('authenticatedUser').sub,
+        EnquiryCategoryId: this.SelectedEnquiryCategoryData,
+        FirstMessage: this.VueEditorContent,
+        SaccoId: this.$auth.$storage.getUniversal('authenticatedUser').sacco_id,
+        Attachments: JSON.stringify(this.Attachment)
+      }
 
-        this.upload().then((e)=>{
-          setTimeout(()=>this.loadingOverlay=false,4000)
+
+      this.UploadEnquiry(payload).then(() => {
+
+        this.finalupload()
+          .then((e) => {
+          setTimeout(() => this.loadingOverlay = false, 4000)
         })
 
         this.ShareTicketNo(this.GetTicketNo)
 
         this.ShareUserName(this.$auth.$storage.getUniversal('authenticatedUser').preferred_username)
 
-      }).catch((e)=>{
+      }).catch((e) => {
         console.log(e)
-      }).finally(()=>{
+      }).finally(() => {
         this.$router.push('/ticket/ticket-success')
       })
     },
@@ -216,6 +244,7 @@ export default {
     this.GetEnquiriesData().then(() => {
       this.EnquiriesComboBox = this.AllEnquiriesData
     })
+
 
   }
 }

@@ -55,12 +55,12 @@ export default {
     console.log(this.$auth.$storage.getUniversal('authenticatedUser'))
 
     this.UserMgr=new UserManager({
-      authority:'https://localhost:5001',
+      authority:'http://192.168.2.106:5001',
       client_id:'js',
-      redirect_uri:'http://localhost:3000/account/callback',
+      redirect_uri:'http://192.168.2.106:59924/account/callback',
       response_type:"code",
       scope:"openid profile enquiries.read enquiries.write",
-      post_logout_redirect_uri:"http://localhost:3000"
+      post_logout_redirect_uri:"http://192.168.2.106:59924"
 
     })
 

@@ -9,7 +9,15 @@ export default (ctx, inject) => {
       GetEnquiryCategory: repositoryWithAxios('/EnquiryCategory/getEnquiryCategory'),
       SaveTicketInformation: repositoryWithAxios('/Ticket/createTicket'),
       GetTicketReportsByUser: repositoryWithAxios('/TicketReportClient/getTicketReportsbyUserId'),
-      GetTicketReportsByTicketNo: repositoryWithAxios('/TicketReportClient/getTicketReportsbyTicketno')
+      GetTicketReportsByTicketNo: repositoryWithAxios('/TicketReportClient/getTicketReportsbyTicketno'),
+      GetTicketResponseByTicketNo: repositoryWithAxios('/Response/getResponsesByTicketNo'),
+      AddResponse:repositoryWithAxios('/Response/AddResponse'),
+      GetUnreadMessages:repositoryWithAxios('/Response/UnreadResponses'),
+      MarkAsRead:repositoryWithAxios('/Response/markAsRead'),
+      GetChatHead:repositoryWithAxios('/Agent/getAgentDetails'),
+      GetOpenedTickets:repositoryWithAxios('/Ticket/TicketsOpenedByUser'),
+      GetTicketInformation:repositoryWithAxios('/Ticket/GetTicketInformation')
+
   }
   inject('postRepository', repositories)
 

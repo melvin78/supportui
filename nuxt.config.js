@@ -3,6 +3,10 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+ server:{
+  host:'0.0.0.0',
+  port:59924
+ },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -24,7 +28,7 @@ export default {
   },
 
   axios: {
-    baseURL:'https://localhost:5005/api',
+    baseURL:'http://192.168.2.106:5005/api',
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -34,6 +38,7 @@ export default {
   plugins: [
     '~plugins/axioshelper.js',
     '~plugins/apiservice.js',
+    '~plugins/vue-pusher.js'
     // '~plugins/upload-digital-ocean.js'
   ],
 
@@ -44,6 +49,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/laravel-echo',
 
   ],
 
@@ -53,6 +59,13 @@ export default {
     '@nuxtjs/axios',
     "vue2-editor/nuxt"
   ],
+  echo: {
+    broadcaster: 'pusher',
+    key: '07acf5ca1c952ced185b',
+    encrypted:true,
+    cluster:'ap2'
+
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
