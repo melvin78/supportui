@@ -55,12 +55,12 @@ export default {
     console.log(this.$auth.$storage.getUniversal('authenticatedUser'))
 
     this.UserMgr=new UserManager({
-      authority:'http://192.168.2.106:5001',
+      authority:'https://identity-server.centrino.melosolutions.tech',
       client_id:'js',
-      redirect_uri:'http://192.168.2.106:59924/account/callback',
+      redirect_uri:'https://support-user-interface.centrino.melosolutions.tech/account/callback',
       response_type:"code",
       scope:"openid profile enquiries.read enquiries.write",
-      post_logout_redirect_uri:"http://192.168.2.106:59924"
+      post_logout_redirect_uri:"https://support-user-interface.centrino.melosolutions.tech"
 
     })
 
