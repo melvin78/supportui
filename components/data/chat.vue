@@ -102,6 +102,7 @@ export default {
     }),
 
 
+
   },
   methods: {
 
@@ -121,12 +122,15 @@ export default {
         this.Responses = e
       })
 
-    this.$postRepository.GetChatHead.show(this.FetchTicketReportByTicketNo.careTaker)
-      .then((e) => {
-        console.log(e)
-        // this.chatHeadFirstName = e.firstName
-        // this.chatHeadSecondName = e.secondName
-      })
+    if (this.FetchTicketReportByTicketNo.careTaker!=='00000000-0000-0000-0000-000000000000'){
+      this.$postRepository.GetChatHead.show(this.FetchTicketReportByTicketNo.careTaker)
+        .then((e) => {
+
+          this.chatHeadFirstName = e.firstName
+          this.chatHeadSecondName = e.secondName
+        })
+
+    }
 
 
     var channel = this.$pusher.subscribe(`chatFrom-${this.TicketBeingViewed}`);
