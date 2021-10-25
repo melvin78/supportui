@@ -123,8 +123,9 @@ export default {
 
     this.$postRepository.GetChatHead.show(this.FetchTicketReportByTicketNo.careTaker)
       .then((e) => {
-        this.chatHeadFirstName = e.result.firstName
-        this.chatHeadSecondName = e.result.secondName
+        console.log(e)
+        // this.chatHeadFirstName = e.firstName
+        // this.chatHeadSecondName = e.secondName
       })
 
 
