@@ -28,7 +28,7 @@ export default {
   },
 
   axios: {
-    baseURL:'http://192.168.2.106:5005/api',
+    baseURL:'https://customer-support.centrino.melosolutions.tech/api',
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
