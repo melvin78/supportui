@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div class="text-center">Hello,{{this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}}</div>
+  <div class="text-center">Hello,{{this.$auth.$storage.getUniversal('authenticatedUser').first_name}}</div>
     <div class=" mt-3 text-center d-flex flex justify-center pb-3">
       <v-btn @click="logOutIdentityServer" color="orange" large >LOG OUT</v-btn>
     </div>

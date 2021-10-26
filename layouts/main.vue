@@ -246,9 +246,9 @@ export default {
           channel.bind('sentResponse', (data) => {
             this.notifications.push(data)
           })
-          // this.$pusher.connection.bind("connected", () => {
-          //   this.SetSocketId(this.$pusher.connection.socket_id)
-          // })
+          this.$pusher.connection.bind("connected", () => {
+            this.SetSocketId(this.$pusher.connection.socket_id)
+          })
 
         }
 
