@@ -52,7 +52,6 @@ export default {
   },
   mounted() {
     this.user= this.$auth.$storage.getUniversal('authenticatedUser')
-    console.log(this.$auth.$storage.getUniversal('authenticatedUser'))
 
     this.UserMgr=new UserManager({
       authority:'https://identity-server.centrino.melosolutions.tech',

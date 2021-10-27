@@ -148,12 +148,9 @@ export default {
           'Content-Type': file.type,
           'x-amz-acl': 'public-read',
         }
-      }).then((res) => {
-        console.log(res.url)
       })
-        .catch((c) => {
-          console.log(c)
-        })
+
+
     },
 
     SendResponse() {
@@ -191,7 +188,7 @@ export default {
         // this.ShareUserName(this.$auth.$storage.getUniversal('authenticatedUser').preferred_username)
 
       }).catch((e) => {
-        console.log(e)
+
       })
     },
   },

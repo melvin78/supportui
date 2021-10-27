@@ -62,9 +62,7 @@ export default {
       this.userMgr.signoutRedirect()
     },
     checkUser(){
-      this.userMgr.getUser().then((user)=>{
-        console.log(user)
-      })
+
     }
 
 

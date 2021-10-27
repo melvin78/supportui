@@ -133,7 +133,7 @@ export default {
 
       this.EnquiryCategorySelect = true
       this.GetEnquiryCategoryData(this.SelectedEnquiry).then(() => {
-        console.log(this.AllEnquiryCategoryData)
+
       })
     },
 
@@ -183,11 +183,7 @@ export default {
           'Content-Type': file.type,
           'x-amz-acl': 'public-read',
         }
-      }).then((res) => {
-        console.log(res.url)
-      })
-        .catch((c) => {
-          console.log(c)
+
         })
     },
 
@@ -225,7 +221,7 @@ export default {
         this.ShareUserName(this.$auth.$storage.getUniversal('authenticatedUser').preferred_username)
 
       }).catch((e) => {
-        console.log(e)
+
       }).finally(() => {
         this.$router.push('/ticket/ticket-success')
       })

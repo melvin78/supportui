@@ -79,9 +79,6 @@ export default {
 
       this.filename= this.files[0].name
       this.filetype= this.files[0].type
-      console.log(this.files[0])
-      console.log(this.filename)
-      console.log(this.filetype)
 
     },
 
@@ -111,8 +108,7 @@ export default {
           'Content-Type': this.files[0].type,
           'x-amz-acl': 'public-read',
         }
-      }).then((res)=>{console.log(res)})
-        .catch((c)=>{console.log(c)})
+      })
     }
 
     },
@@ -120,7 +116,6 @@ export default {
     getMyurl() {
       this.uploadurl = getUploadUrl(this.files[0].name, this.files[0].type)
 
-      console.log(this.uploadurl)
 
     },
 
