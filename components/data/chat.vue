@@ -9,7 +9,7 @@
     >
 
       <v-toolbar-title>
-         {{ chatHeadFirstName }} {{ chatHeadSecondName }}
+         {{ chatHeadFirstName }}
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

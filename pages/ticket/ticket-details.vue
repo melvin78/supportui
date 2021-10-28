@@ -182,7 +182,7 @@ export default {
         this.finalupload()
           .then((e) => {
             setTimeout(() => this.loadingOverlay = false, 4000)
-            this.files.length=0;
+            this.Attachment.length=0;
           })
 
         // this.ShareTicketNo(this.GetTicketNo)
