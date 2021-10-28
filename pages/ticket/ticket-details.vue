@@ -154,7 +154,7 @@ export default {
     },
 
     SendResponse() {
-      this.files.length=0;
+
       for (let i = 0; i < this.files.length; i++) {
         this.random.push(Math.floor(1000 + Math.random() * 9000))
       }
@@ -182,6 +182,7 @@ export default {
         this.finalupload()
           .then((e) => {
             setTimeout(() => this.loadingOverlay = false, 4000)
+            this.files.length=0;
           })
 
         // this.ShareTicketNo(this.GetTicketNo)
