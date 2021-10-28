@@ -154,6 +154,7 @@ export default {
     },
 
     SendResponse() {
+      this.files.length=0;
       for (let i = 0; i < this.files.length; i++) {
         this.random.push(Math.floor(1000 + Math.random() * 9000))
       }
