@@ -70,12 +70,12 @@ export default {
   },
   created() {
     this.userMgr=new UserManager({
-      authority:'https://identity-server.centrino.melosolutions.tech',
+      authority:'https://identity-server.centrino.caprover.centrino.co.ke',
       client_id:'js',
-      redirect_uri:'https://support-user-interface.centrino.melosolutions.tech/account/callback',
+      redirect_uri:'https://helpdesk.centrino.co.ke/account/callback',
       response_type:"code",
       scope:"openid profile enquiries.read enquiries.write",
-      post_logout_redirect_uri:"https://support-user-interface.centrino.melosolutions.tech"
+      post_logout_redirect_uri:"https://helpdesk.centrino.co.ke"
 
     })
 
