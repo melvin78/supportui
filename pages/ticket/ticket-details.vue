@@ -124,16 +124,16 @@ export default {
 
 
       const spaces = new aws.S3({
-        endpoint: 'nyc3.digitaloceanspaces.com',
-        accessKeyId: 'A2G22IBUK6WU5PBTI2B2',
-        secretAccessKey: 'aq7nq1SJmttMjgBUfs0sK/h1op8R71bHTblFbM5IeSk'
+        endpoint: 'fra1.digitaloceanspaces.com',
+        accessKeyId: 'DADLJL7L3LOWXJIH4BEE',
+        secretAccessKey: '2eR2YKnUq5CtdLn+PJfmStSyr1k2xp4Ic2qzFKhjYGM'
       })
 
 
 
       const params = {
-        Bucket: 'centrino',
-        Key: `centrino-support-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
+        Bucket: 'centrino-cdn',
+        Key: `centrino-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
         Expires: 60 * 3, // Expires in 3 minutes
         ContentType: file.type,
         ACL: 'public-read', // Remove this to make the file private
