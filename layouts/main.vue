@@ -22,59 +22,59 @@
       </v-tabs>
 
 
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon
-                 v-bind="attrs"
-                 v-on="on"
-          >
-            <v-badge :content="notifications.length" color="green">
-              <v-icon>mdi-bell-ring-outline</v-icon>
-            </v-badge>
-          </v-btn>
+<!--      <v-menu offset-y>-->
+<!--        <template v-slot:activator="{ on, attrs }">-->
+<!--          <v-btn icon-->
+<!--                 v-bind="attrs"-->
+<!--                 v-on="on"-->
+<!--          >-->
+<!--            <v-badge :content="notifications.length" color="green">-->
+<!--              <v-icon>mdi-bell-ring-outline</v-icon>-->
+<!--            </v-badge>-->
+<!--          </v-btn>-->
 
-        </template>
-        <v-list class="overflow-y-auto" max-height="400">
-          <div v-if="notifications.length===0">
-            <v-list-item class="overflow-y-auto">
-              <v-list-item-content>
-                <v-list-item-title>
-                  <i>You have no new notifications</i>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
+<!--        </template>-->
+<!--        <v-list class="overflow-y-auto" max-height="400">-->
+<!--          <div v-if="notifications.length===0">-->
+<!--            <v-list-item class="overflow-y-auto">-->
+<!--              <v-list-item-content>-->
+<!--                <v-list-item-title>-->
+<!--                  <i>You have no new notifications</i>-->
+<!--                </v-list-item-title>-->
+<!--              </v-list-item-content>-->
+<!--            </v-list-item>-->
 
-          </div>
-          <div v-else>
-            <v-list-item
-              v-for="(item,i) in notifications"
-              :key="i"
-              class="overflow-y-auto"
-            >
-              <v-list-item-content>
+<!--          </div>-->
+<!--          <div v-else>-->
+<!--            <v-list-item-->
+<!--              v-for="(item,i) in notifications"-->
+<!--              :key="i"-->
+<!--              class="overflow-y-auto"-->
+<!--            >-->
+<!--              <v-list-item-content>-->
 
 
-                <v-list-item-title>New Message Notification</v-list-item-title>
+<!--                <v-list-item-title>New Message Notification</v-list-item-title>-->
 
-                <v-list-item-subtitle>
+<!--                <v-list-item-subtitle>-->
 
-                  Agent has responded to your ticket number :
-                  <div class="orange--text"> {{ item.ticketNumber }}</div>
-                  <v-icon>mdi-message-text-outline</v-icon>
-                  <hr class="my-2"/>
+<!--                  Agent has responded to your ticket number :-->
+<!--                  <div class="orange&#45;&#45;text"> {{ item.ticketNumber }}</div>-->
+<!--                  <v-icon>mdi-message-text-outline</v-icon>-->
+<!--                  <hr class="my-2"/>-->
 
-                </v-list-item-subtitle>
-              </v-list-item-content>
+<!--                </v-list-item-subtitle>-->
+<!--              </v-list-item-content>-->
 
-            </v-list-item>
-          </div>
-        </v-list>
-        <v-card>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-          </v-card-actions>
-        </v-card>
-      </v-menu>
+<!--            </v-list-item>-->
+<!--          </div>-->
+<!--        </v-list>-->
+<!--        <v-card>-->
+<!--          <v-card-actions>-->
+<!--            <v-spacer></v-spacer>-->
+<!--          </v-card-actions>-->
+<!--        </v-card>-->
+<!--      </v-menu>-->
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon
@@ -256,14 +256,14 @@ export default {
 
 
 
-    // var channel = this.$pusher.subscribe(`chatFrom`);
-    //
-    // channel.bind('sentResponse', (data) => {
-    //   this.notifications.push(data)
-    // })
-    // this.$pusher.connection.bind("connected", () => {
-    //   this.SetSocketId(this.$pusher.connection.socket_id)
-    // })
+    var channel = this.$pusher.subscribe(`chatFrom`);
+
+    channel.bind('sentResponse', (data) => {
+      this.notifications.push(data)
+    })
+    this.$pusher.connection.bind("connected", () => {
+      this.SetSocketId(this.$pusher.connection.socket_id)
+    })
 
 
     this.$postRepository.GetUnreadMessages.show(this.$auth.$storage.getUniversal('authenticatedUser').sub).then((response) => {

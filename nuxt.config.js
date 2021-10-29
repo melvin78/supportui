@@ -28,7 +28,7 @@ export default {
   },
 
   axios: {
-    baseURL:'https://customer-support.centrino.melosolutions.tech/api',
+    baseURL:'https://customer-api.caprover.centrino.co.ke/api',
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
