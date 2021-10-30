@@ -34,7 +34,7 @@
                   <h6 class="font-italic">Attachments</h6>
                   <div v-for="(attachment,i) in JSON.parse(item.attachments)" :key="i">
                     <a
-                      :href="`https://centrino.nyc3.digitaloceanspaces.com/centrino-support-cdn/${attachment.filename}`"
+                      :href="`https://centrino.fra1.digitaloceanspaces.com/centrino-support-cdn/${attachment.filename}`"
                       target="_blank">Attachment {{ i }}</a>
                   </div>
                 </div>
