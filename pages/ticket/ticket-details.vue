@@ -23,58 +23,60 @@
       </v-card-text>
     </v-card>
     <hr class="my-3"/>
-    <PreviousMessages/>
-    <hr class="my-3"/>
-    <vue-editor
-      v-if="VueEditorShow"
-      v-model="VueEditorContent"
-      :editor-toolbar="customToolbar"
-      class="grey lighten-5 black--text"
-      placeholder="Describe the problem you are experiencing in as much detail as possible. You can also include attachments"
-    />
+    <PreviousMessages>
+      <vue-editor
+        v-if="VueEditorShow"
+        v-model="VueEditorContent"
+        :editor-toolbar="customToolbar"
+        class="grey lighten-5 black--text"
+        placeholder="Describe the problem you are experiencing in as much detail as possible. You can also include attachments"
+      />
 
-    <v-file-input
-      v-if="VueEditorShow"
-      v-model="files"
-      :show-size="1000"
-      class="mt-3"
-      color="deep-purple accent-4"
-      counter
-      label="You can attach multiple screenshots of the error messages"
-      multiple
-      outlined
-      placeholder="Select your files"
-      prepend-icon="mdi-paperclip"
-    >
-      <template v-slot:selection="{ index, text }">
-        <v-chip
-          v-if="index < 2"
-          color="deep-purple accent-4"
-          dark
-          label
-          small
-        >
-          {{ text }}
-        </v-chip>
+      <v-file-input
+        v-if="VueEditorShow"
+        v-model="files"
+        :show-size="1000"
+        class="mt-3"
+        color="deep-purple accent-4"
+        counter
+        label="You can attach multiple screenshots of the error messages"
+        multiple
+        outlined
+        placeholder="Select your files"
+        prepend-icon="mdi-paperclip"
+      >
+        <template v-slot:selection="{ index, text }">
+          <v-chip
+            v-if="index < 2"
+            color="deep-purple accent-4"
+            dark
+            label
+            small
+          >
+            {{ text }}
+          </v-chip>
 
-        <span
-          v-else-if="index === 2"
-          class="text-overline grey--text text--darken-3 mx-2"
-        >
+          <span
+            v-else-if="index === 2"
+            class="text-overline grey--text text--darken-3 mx-2"
+          >
         +{{ files.length - 2 }} File(s)
       </span>
-      </template>
-    </v-file-input>
-    <div v-if="VueEditorShow" class="text-center mt-3">
-      <v-btn
-        color="primary"
-        dark
-        x-large
-        @click="SendResponse"
-      >
-        Submit Issue
-      </v-btn>
-    </div>
+        </template>
+      </v-file-input>
+      <div v-if="VueEditorShow" class="text-center mt-3">
+        <v-btn
+          color="primary"
+          dark
+          x-large
+          @click="SendResponse"
+        >
+          Send Message
+        </v-btn>
+      </div>
+    </PreviousMessages>
+    <hr class="my-3"/>
+
   </section>
 </template>
 

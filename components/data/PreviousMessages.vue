@@ -9,6 +9,9 @@
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <testchat/>
+        <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
+        <slot></slot>
       </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
