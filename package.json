@@ -21,7 +21,8 @@
     "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
-    "@nuxtjs/vuetify": "^1.12.1",
-    "@nuxtjs/laravel-echo": "^1.1.0"
+    "@nuxt/types": "~2.15.0",
+    "@nuxtjs/laravel-echo": "^1.1.0",
+    "@nuxtjs/vuetify": "^1.12.1"
   }
 }

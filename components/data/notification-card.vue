@@ -17,6 +17,7 @@
    <v-card-actions>
      <v-btn
      class="primary"
+     @click="gotoTicketStatus"
      >
        CHECK TICKET STATUS
      </v-btn>
@@ -31,7 +32,13 @@ export default {
   props:{
     UserName:String,
     TicketNo:String,
-  }
+  },
+
+ methods:{
+   gotoTicketStatus(){
+     this.$router.push('/ticket/check-ticket-status')
+   }
+ }
 }
 </script>
 

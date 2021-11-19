@@ -10,8 +10,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - supportuinuxt',
-    title: 'supportuinuxt',
+    titleTemplate: '%s - Helpdesk Centrino',
+    title: 'Helpdesk Centrino',
     htmlAttrs: {
       lang: 'en'
     },
