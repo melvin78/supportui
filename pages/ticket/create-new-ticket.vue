@@ -30,46 +30,46 @@
     </v-col>
     <v-divider/>
 
-    <vue-editor
-      v-if="VueEditorShow"
-      v-model="VueEditorContent"
-      :editor-toolbar="customToolbar"
-      class="grey lighten-5 black--text"
-      placeholder="Describe the problem you are experiencing in as much detail as possible. You can also include attachments"
-    />
+<!--    <vue-editor-->
+<!--      v-if="VueEditorShow"-->
+<!--      v-model="VueEditorContent"-->
+<!--      :editor-toolbar="customToolbar"-->
+<!--      class="grey lighten-5 black&#45;&#45;text"-->
+<!--      placeholder="Describe the problem you are experiencing in as much detail as possible. You can also include attachments"-->
+<!--    />-->
 
-    <v-file-input
-      v-if="VueEditorShow"
-      v-model="files"
-      :show-size="1000"
-      class="mt-3"
-      color="deep-purple accent-4"
-      counter
-      label="You can attach multiple screenshots of the error messages"
-      multiple
-      outlined
-      placeholder="Select your files"
-      prepend-icon="mdi-paperclip"
-    >
-      <template v-slot:selection="{ index, text }">
-        <v-chip
-          v-if="index < 2"
-          color="deep-purple accent-4"
-          dark
-          label
-          small
-        >
-          {{ text }}
-        </v-chip>
+<!--    <v-file-input-->
+<!--      v-if="VueEditorShow"-->
+<!--      v-model="files"-->
+<!--      :show-size="1000"-->
+<!--      class="mt-3"-->
+<!--      color="deep-purple accent-4"-->
+<!--      counter-->
+<!--      label="You can attach multiple screenshots of the error messages"-->
+<!--      multiple-->
+<!--      outlined-->
+<!--      placeholder="Select your files"-->
+<!--      prepend-icon="mdi-paperclip"-->
+<!--    >-->
+<!--      <template v-slot:selection="{ index, text }">-->
+<!--        <v-chip-->
+<!--          v-if="index < 2"-->
+<!--          color="deep-purple accent-4"-->
+<!--          dark-->
+<!--          label-->
+<!--          small-->
+<!--        >-->
+<!--          {{ text }}-->
+<!--        </v-chip>-->
 
-        <span
-          v-else-if="index === 2"
-          class="text-overline grey--text text--darken-3 mx-2"
-        >
-        +{{ files.length - 2 }} File(s)
-      </span>
-      </template>
-    </v-file-input>
+<!--        <span-->
+<!--          v-else-if="index === 2"-->
+<!--          class="text-overline grey&#45;&#45;text text&#45;&#45;darken-3 mx-2"-->
+<!--        >-->
+<!--        +{{ files.length - 2 }} File(s)-->
+<!--      </span>-->
+<!--      </template>-->
+<!--    </v-file-input>-->
     <div v-if="VueEditorShow" class="text-center mt-3">
       <v-btn
         color="primary"
@@ -147,56 +147,57 @@ export default {
     }),
 
 
-    async finalupload() {
+    // async finalupload() {
+    //
+    //   for (let i = 0; i < this.files.length; i++) {
+    //    await this.upload(this.files[i], i)
+    //   }
+    // },
 
-      for (let i = 0; i < this.files.length; i++) {
-       await this.upload(this.files[i], i)
-      }
-    },
-
-   async upload(file, i) {
-      const aws = require('aws-sdk')
-
-
-      const spaces = new aws.S3({
-        endpoint: 'nyc3.digitaloceanspaces.com',
-        accessKeyId: 'A2G22IBUK6WU5PBTI2B2',
-        secretAccessKey: 'aq7nq1SJmttMjgBUfs0sK/h1op8R71bHTblFbM5IeSk'
-      })
-
-
-
-      const params = {
-        Bucket: 'centrino',
-        Key: `centrino-support-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
-        Expires: 60 * 3, // Expires in 3 minutes
-        ContentType: file.type,
-        ACL: 'public-read', // Remove this to make the file private
-      }
-
-
-
-      fetch(spaces.getSignedUrl('putObject', params), {
-        method: 'PUT',
-        body: file,
-        headers: {
-          'Content-Type': file.type,
-          'x-amz-acl': 'public-read',
-        }
-
-        })
-    },
+   // async upload(file, i) {
+   //    const aws = require('aws-sdk')
+   //
+   //
+   //    const spaces = new aws.S3({
+   //      endpoint: 'nyc3.digitaloceanspaces.com',
+   //      accessKeyId: '3ZISN34MM5N5CHWJKNDG',
+   //      secretAccessKey: 'E9nKKkt8+pNpmha+fWi47o4pl9y7h+V/I6/oV2PBB+c'
+   //    })
+   //
+   //
+   //
+   //    const params = {
+   //      Bucket: 'centrino',
+   //      Key: `centrino-support-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
+   //      Expires: 60 * 3, // Expires in 3 minutes
+   //      ContentType: file.type,
+   //      ACL: 'public-read', // Remove this to make the file private
+   //    }
+   //
+   //
+   //
+   //    console.log(file)
+   //    fetch(spaces.getSignedUrl('putObject', params), {
+   //      method: 'PUT',
+   //      body: file,
+   //      headers: {
+   //        'Content-Type': file.type,
+   //        'x-amz-acl': 'public-read',
+   //      }
+   //
+   //      })
+   //  },
 
     SaveEnquiry() {
-      for (let i = 0; i < this.files.length; i++) {
-        this.random.push(Math.floor(1000 + Math.random() * 9000))
-      }
-
-      for (let i = 0; i < this.files.length; i++) {
-        this.Attachment.push({
-          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`
-        })
-      }
+      // for (let i = 0; i < this.files.length; i++) {
+      //   this.random.push(Math.floor(1000 + Math.random() * 9000))
+      // }
+      //
+      // for (let i = 0; i < this.files.length; i++) {
+      //   this.Attachment.push({
+      //     filename:`${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`
+      //   })
+      // }
 
 
       this.loadingOverlay = true
@@ -209,16 +210,14 @@ export default {
       }
 
 
+
       this.UploadEnquiry(payload).then(() => {
 
-        this.finalupload()
-          .then((e) => {
-          setTimeout(() => this.loadingOverlay = false, 4000)
-        })
-
+        setTimeout(() => this.loadingOverlay = false, 4000)
         this.ShareTicketNo(this.GetTicketNo)
 
         this.ShareUserName(this.$auth.$storage.getUniversal('authenticatedUser').preferred_username)
+
 
       }).catch((e) => {
 

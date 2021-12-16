@@ -157,7 +157,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "main",
@@ -228,42 +228,44 @@ export default {
     ...mapActions({
       AddChatMessageToNotificationBar: 'response/response/SetResponse',
       SetTicketBeingViewed: 'tickets/ticket-details/SaveTicketBeingViewed',
-      SetSocketId: 'tickets/ticket-details/SetSocketId',
+      SetSocketId: 'chatroom/SetSocketId',
       SetChats: 'tickets/ticket-details/SetChats',
 
 
     })
   },
 
+  computed:{
+    ...mapGetters({
+      GetSocketId:'chatroom/getSocketId'
+    })
+  },
   mounted() {
 
-    this.$postRepository.GetOpenedTickets.show(this.$auth.$storage.getUniversal('authenticatedUser').sub)
-      .then((e) => {
+    // this.$postRepository.GetOpenedTickets.show(this.$auth.$storage.getUniversal('authenticatedUser').sub)
+    //   .then((e) => {
+    //
+    //     for (let i = 0; i < e.length; i++) {
+    //       var channel = this.$pusher.subscribe(`chatFrom-${e[i]}`);
+    //
+    //       channel.bind('sentResponse', (data) => {
+    //         this.notifications.push(data)
+    //       })
+    //       this.$pusher.connection.bind("connected", () => {
+    //         this.SetSocketId(this.$pusher.connection.socket_id)
+    //       })
+    //
+    //     }
+    //
+    //   })
 
-        for (let i = 0; i < e.length; i++) {
-          var channel = this.$pusher.subscribe(`chatFrom-${e[i]}`);
-
-          channel.bind('sentResponse', (data) => {
-            this.notifications.push(data)
-          })
-          this.$pusher.connection.bind("connected", () => {
-            this.SetSocketId(this.$pusher.connection.socket_id)
-          })
-
-        }
-
-      })
 
 
-
-    var channel = this.$pusher.subscribe(`chatFrom`);
-
-    channel.bind('sentResponse', (data) => {
-      this.notifications.push(data)
-    })
-    this.$pusher.connection.bind("connected", () => {
-      this.SetSocketId(this.$pusher.connection.socket_id)
-    })
+    // var channel = this.$pusher.subscribe(`chatFrom`);
+    //
+    // channel.bind('sentResponse', (data) => {
+    //   this.notifications.push(data)
+    // })
 
 
     this.$postRepository.GetUnreadMessages.show(this.$auth.$storage.getUniversal('authenticatedUser').sub).then((response) => {
