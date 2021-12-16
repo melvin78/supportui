@@ -16,7 +16,11 @@ export default (ctx, inject) => {
       MarkAsRead:repositoryWithAxios('/Response/markAsRead'),
       GetChatHead:repositoryWithAxios('/Agent/getAgentDetails'),
       GetOpenedTickets:repositoryWithAxios('/Ticket/TicketsOpenedByUser'),
-      GetTicketInformation:repositoryWithAxios('/Ticket/GetTicketInformation')
+      GetTicketInformation:repositoryWithAxios('/Ticket/GetTicketInformation'),
+      SendMessage:repositoryWithAxios('/Chats/SendMessage'),
+      GetChatRooms:repositoryWithAxios('/Inbox/getInbox'),
+
+
 
   }
   inject('postRepository', repositories)
