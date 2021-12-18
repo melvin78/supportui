@@ -10,7 +10,7 @@
       :loading-rooms="loadingRooms"
       :messages="messages"
       :messages-loaded="messagesLoaded"
-      @fetch-messages="onFetchMessages"
+      @fetch-messages="fetchMessages"
     />
   </div>
 </template>
@@ -65,8 +65,8 @@ export default {
     const chatWindow = pusher.subscribe(`ticket-${this.GetRoomId}`);
 
     chatWindow.bind('conversation', (data) => {
-
-      this.messages.push(data)
+     console.log(data)
+      // this.messages.push(data)
     });
 
   },
@@ -74,6 +74,7 @@ export default {
 
     ...mapActions({
       SetSocketId: 'chatroom/SetSocketId',
+      SetRoomId:'chatroom/SetRoomId'
 
     }),
 
@@ -274,13 +275,28 @@ export default {
 
     },
 
+    fetchMessages({ room, options = {} }) {
+      this.$emit('show-demo-options', false)
 
-    onFetchMessages() {
-      setTimeout(() => {
-        this.messages = [];
-        this.messagesLoaded = true;
-      });
-    },
+      // if (options.reset) {
+      //   this.resetMessages()
+      //   this.roomId = room.roomId
+      // }
+      //
+      // if (this.previousLastLoadedMessage && !this.lastLoadedMessage) {
+
+      // }
+
+
+      this.SetRoomId(room.roomId)
+
+      this.$postRepository.GetMessages.show(this.GetRoomId).then((res)=>{
+        this.messagesLoaded=true
+        this.messages=res
+      })
+
+    }
+
   }
 
 }
