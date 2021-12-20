@@ -32,6 +32,12 @@
           <v-card>
             <v-card-text>
               <v-list-item two-line>
+                <v-list-item-content v-if="item.firstmessage!==''">
+                  <v-list-item-title>Message</v-list-item-title>
+                  <v-list-item-subtitle >
+                   {{item.firstmessage}}
+                  </v-list-item-subtitle>
+                </v-list-item-content>
                 <v-list-item-content v-if="item.attachments.length>0">
                   <v-list-item-title>Attachments</v-list-item-title>
                   <v-list-item-subtitle v-for="(item,i) in item.attachments">
@@ -42,7 +48,7 @@
                   <v-list-item-title>Resolved</v-list-item-title>
                   <v-list-item-subtitle>{{item.resolvedon}}</v-list-item-subtitle>
                 </v-list-item-content>
-                <v-list-item-content v-if="item.caretaker!==''">
+                <v-list-item-content v-if="item.caretaker!==null">
                   <v-list-item-title>Agent Assigned</v-list-item-title>
                   <v-list-item-subtitle>{{ item.caretaker }}</v-list-item-subtitle>
                 </v-list-item-content>
