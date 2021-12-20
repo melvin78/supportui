@@ -28,6 +28,22 @@
         @change="VueEditorShow=true"
       ></v-select>
     </v-col>
+    <v-col cols="6" v-if="VueEditorShow">
+      <v-subheader>Set Ticket Priority</v-subheader>
+      <v-slider
+        v-model="ticketPriority"
+        :tick-labels="ticksLabels"
+        :max="2"
+        step="1"
+        thumb-label="always"
+        :thumb-color="color[ticketPriority]"
+        ticks="always"
+        tick-size="2"
+      >
+
+
+      </v-slider>
+    </v-col>
     <v-divider/>
 
     <vue-editor
@@ -110,6 +126,13 @@ export default {
       uploadurl: null,
       filename: '',
       filetype: '',
+      ticketPriority:0,
+      ticksLabels: [
+      'Low',
+      'Medium',
+      'High',
+    ],
+      color:['success','warning','red'],
       files: [],
       Attachment:[],
       random: [],
@@ -212,7 +235,8 @@ export default {
         EnquiryCategoryId: this.SelectedEnquiryCategoryData,
         FirstMessage:text,
         SaccoId: this.$auth.$storage.getUniversal('authenticatedUser').sacco_id,
-        Attachments: JSON.stringify(this.Attachment)
+        Attachments: JSON.stringify(this.Attachment),
+        PriorityLevel:this.ticketPriority
       }
 
 
