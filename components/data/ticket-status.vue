@@ -1,215 +1,147 @@
 <template>
   <v-container fluid>
-    <v-data-iterator
-      :items="items"
-      :items-per-page.sync="itemsPerPage"
-      :page.sync="page"
-      :search="search"
-      :sort-by="sortBy.toLowerCase()"
-      :sort-desc="sortDesc"
-      hide-default-footer
+    <v-data-table
+        :items="items"
+        show-expand
+        item-key="ticketnumber"
+        :single-expand="singleExpand"
+        :expanded.sync="expanded"
+        :headers="headers"
+        :page.sync="page"
+        :sort-desc="sortDesc"
     >
-      <template v-slot:header>
-        <v-toolbar
-          dark
-          color="blue darken-3"
-          class="mb-1"
-        >
-          <v-text-field
-            v-model="search"
-            clearable
-            flat
-            solo-inverted
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            label="Search"
-          ></v-text-field>
-          <template v-if="$vuetify.breakpoint.mdAndUp">
-            <v-spacer></v-spacer>
-            <v-select
-              v-model="sortBy"
-              flat
-              solo-inverted
-              hide-details
-              :items="keys"
-              prepend-inner-icon="mdi-magnify"
-              label="Sort by"
-            ></v-select>
-            <v-spacer></v-spacer>
-            <v-btn-toggle
-              v-model="sortDesc"
-              mandatory
-            >
-              <v-btn
-                large
-                depressed
-                color="blue"
-                :value="false"
-              >
-                <v-icon>mdi-arrow-up</v-icon>
-              </v-btn>
-              <v-btn
-                large
-                depressed
-                color="blue"
-                :value="true"
-              >
-                <v-icon>mdi-arrow-down</v-icon>
-              </v-btn>
-            </v-btn-toggle>
-          </template>
-        </v-toolbar>
-      </template>
-
-      <template v-slot:default="props">
-        <v-row>
-          <v-col
-            v-for="item in props.items"
-            :key="item.ticketNo"
-            cols="12"
-            sm="6"
-            md="4"
-            lg="3"
-          >
-            <v-card>
-              <v-card-title class="subheading font-weight-bold">
-                {{ item.ticketNo }}
-              </v-card-title>
-
-              <v-divider></v-divider>
-
-              <v-list dense>
-                <v-list-item
-                  v-for="(key, index) in filteredKeys"
-                  :key="index"
-                >
-                  <v-list-item-content :class="{ 'blue--text': sortBy === key }">
-                    {{ key }}:
-                  </v-list-item-content>
-                  <v-list-item-content
-                    class="align-end"
-                    :class="{ 'blue--text': sortBy === key }"
-                  >
-                    {{ item[key.toLowerCase().replace(/\s+/g,'')] }}
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </v-card>
-          </v-col>
-        </v-row>
-      </template>
-
-      <template v-slot:footer>
-        <v-row
-          class="mt-2"
-          align="center"
-          justify="center"
-        >
-          <span class="grey--text">Items per page</span>
-          <v-menu offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                dark
-                text
-                color="primary"
-                class="ml-2"
-                v-bind="attrs"
-                v-on="on"
-              >
-                {{ itemsPerPage }}
-                <v-icon>mdi-chevron-down</v-icon>
-              </v-btn>
-            </template>
-            <v-list>
-              <v-list-item
-                v-for="(number, index) in itemsPerPageArray"
-                :key="index"
-                @click="updateItemsPerPage(number)"
-              >
-                <v-list-item-title>{{ number }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
-          <v-spacer></v-spacer>
-
-          <span
-            class="mr-4
-            grey--text"
-          >
-            Page {{ page }} of {{ numberOfPages }}
-          </span>
-          <v-btn
-            fab
+      <template v-slot:item.ticketstatus="{ item }">
+        <v-chip
+            :color="getColor(item.ticketstatus)"
             dark
-            color="blue darken-3"
-            class="mr-1"
-            @click="formerPage"
-          >
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-          <v-btn
-            fab
-            dark
-            color="blue darken-3"
-            class="ml-1"
-            @click="nextPage"
-          >
-            <v-icon>mdi-chevron-right</v-icon>
-          </v-btn>
-        </v-row>
+        >
+          {{ item.ticketstatus }}
+        </v-chip>
       </template>
-    </v-data-iterator>
+      <template v-slot:item.description="{ item }">
+        <v-chip
+            :color="getDescriptionColor(item.description)"
+            dark
+
+        >
+          {{ item.description }}
+        </v-chip>
+      </template>
+      <template v-slot:expanded-item="{ headers, item }">
+        <td :colspan="headers.length">
+          <div class="row sp-details">
+            <div v-if="item.resolvedon!==null" class="col-4  ">
+              <v-subheader>Resolved on</v-subheader>
+              {{item.resolvedon}}
+            </div>
+            <div v-if="item.firstmessage!==null" class="col-4 ">
+              <v-subheader>Issue Raised</v-subheader>
+              {{item.firstmessage}}
+            </div>
+            <div v-if="item.caretaker!==null" class="col-4 ">
+              <v-subheader>Agent Assigned</v-subheader>
+              {{item.caretaker}}
+            </div>
+            <div v-if="item.attachments.length>0" class="col-4 ">
+              <v-subheader>Attachments</v-subheader>
+              <div v-for="(item,i) in item.attachments">
+                <a :href="`https://centrino-cdn.fra1.digitaloceanspaces.com/centrino-cdn/${item.filename}`">attachment {{i+1}}</a>
+              </div>
+            </div>
+            <div v-if="item.dateassigned!==null" class="col-4 ">
+              <v-subheader>Date Assigned</v-subheader>
+              {{item.dateassigned}}
+            </div>
+          </div>
+
+
+
+        </td>
+
+      </template>
+
+    </v-data-table>
   </v-container>
 </template>
 
 <script>
 export default {
   name: "ticket-status",
-  data () {
+  data() {
     return {
       itemsPerPageArray: [4, 8, 12],
       search: '',
       filter: {},
+      singleExpand: true,
+      expanded: [],
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
       sortBy: 'ticketNo',
-      keys: [
-        'Ticket Number',
-        'Ticket Status',
-        'Enquiry Category',
-        'Opened On',
-      ],
-      items: [
+      headers: [
+        {text: 'Ticket Number', value: "ticketnumber"},
+        {text: 'Ticket Status', value: "ticketstatus"},
+        {text: 'Enquiry Category', value: "enquirycategory"},
+        {text: 'Opened On', value: "openedon"},
+        {text: 'Priority level', value: "description"},
+        {text: 'ViewDetails', value: 'data-table-expand'},
 
       ],
+      items: [],
     }
   },
   computed: {
-    numberOfPages () {
+    numberOfPages() {
       return Math.ceil(this.items.length / this.itemsPerPage)
     },
-    filteredKeys () {
+    filteredKeys() {
 
       return this.keys.filter(key => key !== 'TicketNo')
     },
   },
   methods: {
-    nextPage () {
+    getDescriptionColor(priority) {
+
+      if (priority === 'High') {
+        return '#EF5350'
+      }
+      if (priority === 'Medium') {
+        return '#DCE775'
+      }
+      if (priority === 'Low') {
+        return '#C5E1A5'
+      }
+
+    },
+    getColor(ticketstatus) {
+      if (ticketstatus === 'Assigned') {
+        return 'brown'
+      }
+      if (ticketstatus === 'Resolved') {
+        return 'green'
+      }
+      if (ticketstatus === 'Received') {
+
+        return '#FFEE58'
+      }
+      if (ticketstatus === 'Transferred') {
+        return 'orange'
+      }
+    },
+    nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1
     },
-    formerPage () {
+    formerPage() {
       if (this.page - 1 >= 1) this.page -= 1
     },
-    updateItemsPerPage (number) {
+    updateItemsPerPage(number) {
       this.itemsPerPage = number
     },
   },
 
   mounted() {
-    this.$postRepository.GetTicketInformation.show(this.$auth.$storage.getUniversal('authenticatedUser').sub).then((e)=>{
-      this.items=e.result
+    this.$postRepository.GetTicketInformation.show(this.$auth.$storage.getUniversal('authenticatedUser').sub).then((e) => {
+      this.items = e.result
     });
   }
 }

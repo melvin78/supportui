@@ -28,6 +28,22 @@
         @change="VueEditorShow=true"
       ></v-select>
     </v-col>
+    <v-col cols="6" v-if="VueEditorShow">
+      <v-subheader>Set Ticket Priority</v-subheader>
+      <v-slider
+        v-model="ticketPriority"
+        :tick-labels="ticksLabels"
+        :max="2"
+        step="1"
+        thumb-label="always"
+        :thumb-color="color[ticketPriority]"
+        ticks="always"
+        tick-size="2"
+      >
+
+
+      </v-slider>
+    </v-col>
     <v-divider/>
 
     <vue-editor
@@ -110,6 +126,13 @@ export default {
       uploadurl: null,
       filename: '',
       filetype: '',
+      ticketPriority:0,
+      ticksLabels: [
+      'Low',
+      'Medium',
+      'High',
+    ],
+      color:['success','warning','red'],
       files: [],
       Attachment:[],
       random: [],
@@ -160,7 +183,7 @@ export default {
 
 
       const spaces = new aws.S3({
-        endpoint: 'nyc3.digitaloceanspaces.com',
+        endpoint: 'fra1.digitaloceanspaces.com',
         accessKeyId: '3ZISN34MM5N5CHWJKNDG',
         secretAccessKey: 'E9nKKkt8+pNpmha+fWi47o4pl9y7h+V/I6/oV2PBB+c'
       })
@@ -168,8 +191,8 @@ export default {
 
 
       const params = {
-        Bucket: 'centrino',
-        Key: `centrino-support-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
+        Bucket: 'centrino-cdn',
+        Key: `centrino-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').sub}-${this.random[i]}`,
         Expires: 60 * 3, // Expires in 3 minutes
         ContentType: file.type,
         ACL: 'public-read', // Remove this to make the file private
@@ -189,16 +212,20 @@ export default {
         })
     },
 
-    SaveEnquiry() {
+   async SaveEnquiry() {
+
+
       for (let i = 0; i < this.files.length; i++) {
         this.random.push(Math.floor(1000 + Math.random() * 9000))
       }
 
+
       for (let i = 0; i < this.files.length; i++) {
         this.Attachment.push({
-          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`
+          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').sub}-${this.random[i]}`
         })
       }
+     await this.finalupload()
 
 
       this.loadingOverlay = true
@@ -212,7 +239,8 @@ export default {
         EnquiryCategoryId: this.SelectedEnquiryCategoryData,
         FirstMessage:text,
         SaccoId: this.$auth.$storage.getUniversal('authenticatedUser').sacco_id,
-        Attachments: JSON.stringify(this.Attachment)
+        Attachments: JSON.stringify(this.Attachment),
+        PriorityLevel:this.ticketPriority
       }
 
 
