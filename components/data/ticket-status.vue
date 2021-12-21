@@ -30,25 +30,25 @@
       <template v-slot:expanded-item="{ headers, item }">
         <td :colspan="headers.length">
           <div class="row sp-details">
-            <div v-if="item.resolvedon!==null" class="col-4  ">
+            <div v-if="item.resolvedon!==null" class="col-4 mb-2 ">
               <v-subheader>Resolved on</v-subheader>
               {{item.resolvedon}}
             </div>
-            <div v-if="item.firstmessage!==null" class="col-4 ">
+            <div v-if="item.firstmessage!==null" class="col-4 mb-2">
               <v-subheader>Issue Raised</v-subheader>
               {{item.firstmessage}}
             </div>
-            <div v-if="item.caretaker!==null" class="col-4 ">
+            <div v-if="item.caretaker!==null" class="col-4 mb-2">
               <v-subheader>Agent Assigned</v-subheader>
               {{item.caretaker}}
             </div>
-            <div v-if="item.attachments.length>0" class="col-4 ">
+            <div v-if="item.attachments.length>0" class="col-4 mb-2 ">
               <v-subheader>Attachments</v-subheader>
               <div v-for="(item,i) in item.attachments">
                 <a :href="`https://centrino-cdn.fra1.digitaloceanspaces.com/centrino-cdn/${item.filename}`">attachment {{i+1}}</a>
               </div>
             </div>
-            <div v-if="item.dateassigned!==null" class="col-4 ">
+            <div v-if="item.dateassigned!==null" class="col-4 mb-2 ">
               <v-subheader>Date Assigned</v-subheader>
               {{item.dateassigned}}
             </div>

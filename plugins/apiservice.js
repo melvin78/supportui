@@ -19,7 +19,7 @@ export default (ctx, inject) => {
       GetTicketInformation:repositoryWithAxios('/Ticket/GetTicketInformation'),
       SendMessage:repositoryWithAxios('/Chats/SendMessage'),
       GetChatRooms:repositoryWithAxios('/Inbox/getInbox'),
-    GetMessages:repositoryWithAxios('/Chats/GetMessages'),
+      GetMessages:repositoryWithAxios('/Chats/GetMessages'),
 
 
 
