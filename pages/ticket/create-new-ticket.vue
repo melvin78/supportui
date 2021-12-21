@@ -183,7 +183,7 @@ export default {
 
 
       const spaces = new aws.S3({
-        endpoint: 'nyc3.digitaloceanspaces.com',
+        endpoint: 'fra1.digitaloceanspaces.com',
         accessKeyId: '3ZISN34MM5N5CHWJKNDG',
         secretAccessKey: 'E9nKKkt8+pNpmha+fWi47o4pl9y7h+V/I6/oV2PBB+c'
       })
@@ -191,8 +191,8 @@ export default {
 
 
       const params = {
-        Bucket: 'centrino',
-        Key: `centrino-support-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`,
+        Bucket: 'centrino-cdn',
+        Key: `centrino-cdn/${this.$auth.$storage.getUniversal('authenticatedUser').sub}-${this.random[i]}`,
         Expires: 60 * 3, // Expires in 3 minutes
         ContentType: file.type,
         ACL: 'public-read', // Remove this to make the file private
@@ -212,16 +212,20 @@ export default {
         })
     },
 
-    SaveEnquiry() {
+   async SaveEnquiry() {
+
+
       for (let i = 0; i < this.files.length; i++) {
         this.random.push(Math.floor(1000 + Math.random() * 9000))
       }
 
+
       for (let i = 0; i < this.files.length; i++) {
         this.Attachment.push({
-          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').preferred_username}-${this.random[i]}`
+          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').sub}-${this.random[i]}`
         })
       }
+     await this.finalupload()
 
 
       this.loadingOverlay = true
