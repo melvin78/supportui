@@ -2,7 +2,7 @@
   <div class="container px-5 py-13 mx-auto">
 <div class="d-flex flex flex-wrap justify-center m-4" style="margin: -1rem">
   <v-card
-    class="mx-auto mt-3 blue-grey darken-2"
+    class="mx-auto mt-3"
     max-width="400"
     v-for="i in items"
     :key="i.id"
