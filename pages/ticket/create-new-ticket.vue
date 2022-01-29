@@ -222,7 +222,8 @@ export default {
 
       for (let i = 0; i < this.files.length; i++) {
         this.Attachment.push({
-          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').sub}-${this.random[i]}`
+          filename:`${this.$auth.$storage.getUniversal('authenticatedUser').sub}-${this.random[i]}`,
+          type:this.files[i].type,
         })
       }
      await this.finalupload()
@@ -230,17 +231,19 @@ export default {
 
       this.loadingOverlay = true
 
-      const content = this.VueEditorContent;
-      const div= document.createElement("div");
-      div.innerHTML=content
-      const text= div.textContent || div.innerText || "";
+      // const content = this.VueEditorContent;
+      // const div= document.createElement("div");
+      // div.innerHTML=content
+      // const text= div.textContent || div.innerText || "";
       let payload = {
         CustomerId: this.$auth.$storage.getUniversal('authenticatedUser').sub,
         EnquiryCategoryId: this.SelectedEnquiryCategoryData,
-        FirstMessage:text,
+        FirstMessage:this.VueEditorContent,
         SaccoId: this.$auth.$storage.getUniversal('authenticatedUser').sacco_id,
         Attachments: JSON.stringify(this.Attachment),
-        PriorityLevel:this.ticketPriority
+        PriorityLevel:this.ticketPriority,
+        EnquiryId:this.SelectedEnquiry,
+
       }
 
 
