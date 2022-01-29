@@ -75,71 +75,7 @@
 <!--          </v-card-actions>-->
 <!--        </v-card>-->
 <!--      </v-menu>-->
-      <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon
-                 v-bind="attrs"
-                 v-on="on"
-          >
-            <v-badge :content="unreadNotifications.length">
-              <v-icon>mdi-history</v-icon>
-            </v-badge>
-          </v-btn>
 
-        </template>
-        <v-list class="overflow-y-auto" max-height="400">
-          <div v-if="unreadNotifications.length===0">
-            <v-list-item class="overflow-y-auto">
-              <v-list-item-content>
-                <v-list-item-title>
-                  <i>You have no unread messages</i>
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-          </div>
-          <div v-else>
-            <v-list-item
-              v-for="(item,i) in unreadNotifications"
-              :key="i"
-              class="overflow-y-auto"
-            >
-              <v-list-item-content>
-
-
-                <v-list-item-title>Unread Messages</v-list-item-title>
-
-                <v-list-item-subtitle>
-
-                  Unread Message from ticket number:
-                  <div class="orange--text"> {{ item.ticketNumber }}</div>
-                  <v-icon @click="GoToChat(item.ticketNumber,item.id,i)">mdi-message-text-outline</v-icon>
-                  <hr class="my-2"/>
-
-                </v-list-item-subtitle>
-              </v-list-item-content>
-
-            </v-list-item>
-          </div>
-        </v-list>
-        <v-card>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <div v-if="unreadNotifications.length>0">
-              <v-btn
-                text
-                @click="clearNotifications"
-
-              >
-                MARK ALL AS READ
-              </v-btn>
-            </div>
-
-          </v-card-actions>
-        </v-card>
-      </v-menu>
-
-      <div class="ml-3"></div>
 
     </v-app-bar>
 
