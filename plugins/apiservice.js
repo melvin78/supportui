@@ -20,6 +20,10 @@ export default (ctx, inject) => {
       SendMessage:repositoryWithAxios('/Chats/SendMessage'),
       GetChatRooms:repositoryWithAxios('/Inbox/getInbox'),
       GetMessages:repositoryWithAxios('/Chats/GetMessages'),
+    GetInboxId:repositoryWithAxios('/Inbox/getInboxId'),
+    GetSingleRoom:repositoryWithAxios('/Inbox/GetSingleInbox'),
+
+
 
 
 

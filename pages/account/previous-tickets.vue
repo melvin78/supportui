@@ -47,23 +47,6 @@
           </v-icon>
         </v-chip>
 
-        <v-chip
-          class="ma-2"
-          color="primary"
-          outlined
-          pill
-          @click="action(item)"
-        >
-          <div v-if="item.ticketStatusVal==='Assigned'">
-            Send Email
-          </div>
-          <div v-else>
-            View Details
-          </div>
-          <v-icon right>
-            mdi-email
-          </v-icon>
-        </v-chip>
       </template>
 
 
@@ -71,36 +54,6 @@
     <v-row justify="center">
 
 
-      <v-dialog
-        v-model="GetDialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-      >
-        <v-card>
-          <v-toolbar
-            dark
-            color="primary"
-          >
-            <v-btn
-              icon
-              dark
-              @click="UnsetDialog"
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-            <v-toolbar-title>Conversation with {{GetCustomerName}}</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-
-            </v-toolbar-items>
-          </v-toolbar>
-          <v-card-text>
-            <ChatWidget/>
-
-          </v-card-text>
-        </v-card>
-      </v-dialog>
     </v-row>
 
   </v-card>
@@ -110,11 +63,10 @@
 import DataTable from "../../components/data/DataTable";
 import ClientReportTable from "../../components/report/ClientReportTable";
 import {mapActions, mapGetters} from "vuex";
-import ChatWidget from "@/components/ChatWidget";
 
 export default {
   name: "previous-tickets",
-  components: {ClientReportTable, DataTable,ChatWidget},
+  components: {ClientReportTable, DataTable},
   layout: "main",
 
   data() {
@@ -123,6 +75,7 @@ export default {
       TicketRep: [],
       search: '',
       BtnText: '',
+      respondOverlay:false,
 
       headers: [
         {
@@ -157,7 +110,13 @@ export default {
       this.SetRoomId(val.ticketNo)
       this.SetChatHead(val.careTakerName)
       this.SetDialog()
+      this.respondOverlay=true
 
+      this.$postRepository.GetInboxId.show(val.ticketNo).then((res)=>{
+        this.respondOverlay=false
+        this.$router.push(`/chat/${val.ticketNo}/${res}`)
+
+      })
 
     },
     getColor(ticketStatusVal) {
