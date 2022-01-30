@@ -82,11 +82,10 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
-import PreviousMessages from "../../components/data/PreviousMessages";
 
 export default {
   name: "ticket-details",
-  components: {PreviousMessages},
+  components: {},
   layout: "main",
   data(){
     return{

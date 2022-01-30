@@ -36,7 +36,7 @@
             </div>
             <div v-if="item.firstmessage!==null" class="col-4 mb-2">
               <v-subheader>Issue Raised</v-subheader>
-              {{item.firstmessage}}
+              <div v-html="item.firstmessage"></div>
             </div>
             <div v-if="item.caretaker!==null" class="col-4 mb-2">
               <v-subheader>Agent Assigned</v-subheader>
