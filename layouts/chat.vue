@@ -69,7 +69,7 @@
                       >
                         <v-card-title>
 
-                          <span class="text-h6 font-weight-light">{{ message.timestamp }}</span>
+                          <span class=" font-weight-thin">{{ message.date }}</span>
                         </v-card-title>
 
                         <v-card-text class="font-weight-bold">
@@ -79,7 +79,7 @@
                         </v-card-text>
 
                         <v-card-actions>
-
+                          <em class="font-weight-thin">{{message.timestamp}}</em>
                         </v-card-actions>
                       </v-card>
                     </div>
@@ -126,7 +126,7 @@
               class="mt-3"
               color="deep-purple accent-4"
               counter
-              label="You can attach multiple screenshots of the error messages"
+              label="attach image,document..."
               multiple
               outlined
               placeholder="Select your files"
@@ -178,6 +178,7 @@
 
 <script>
 import {mapActions, mapGetters} from "vuex";
+import {parseTimestamp} from "@/utils/dates";
 
 export default {
   name: "chat",
@@ -326,8 +327,9 @@ export default {
         IndexId: this.$route.params.ticketno,
         ReceiverEmailAddress: this.inbox.roomUsersIdTo,
         UserName: this.$auth.$storage.getUniversal('authenticatedUser').preferred_username,
-        Date: new Date(),
+        Date: parseTimestamp(new Date(), 'DD MMMM YYYY'),
         ChatFileUrl: JSON.stringify(this.Attachment),
+        Timestamp: parseTimestamp(new Date(), 'HH:mm'),
         Agent: false,
       }
 
