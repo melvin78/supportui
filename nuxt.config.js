@@ -43,6 +43,8 @@ export default {
   plugins: [
     '~plugins/axioshelper.js',
     '~plugins/apiservice.js',
+        "~/plugins/v-perfect-scrollbar.client.js",
+
   
     { src: '~/plugins/vuex-persist.js', mode: 'client' }, // only on client side
     // '~plugins/upload-digital-ocean.js'
