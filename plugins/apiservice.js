@@ -22,6 +22,8 @@ export default (ctx, inject) => {
       GetMessages:repositoryWithAxios('/Chats/GetMessages'),
     GetInboxId:repositoryWithAxios('/Inbox/getInboxId'),
     GetSingleRoom:repositoryWithAxios('/Inbox/GetSingleInbox'),
+    GetAllAgents:repositoryWithAxios('/Agent/getAgents'),
+
 
 
 
