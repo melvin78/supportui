@@ -44,7 +44,54 @@
 
       </v-slider>
     </v-col>
+
     <v-divider/>
+    <v-col cols="12">
+      <v-autocomplete
+        v-model="agentSelected"
+        v-if="VueEditorShow"
+        :items="agents"
+        outlined
+        dense
+        label="search for agent..."
+        persistent-hint
+        hint="(OPTIONAL) you can choose agent(s) to address"
+        chips
+        color="blue-grey lighten-2"
+        item-text="username"
+        item-value="username"
+        multiple
+      >
+        <template v-slot:selection="data">
+          <v-chip
+            v-bind="data.attrs"
+            :input-value="data.selected"
+            close
+            @click="data.select"
+            @click:close="remove(data.item)"
+          >
+            <v-avatar left>
+              <v-img :src="data.item.avatar"></v-img>
+            </v-avatar>
+            {{ data.item.username }}
+          </v-chip>
+        </template>
+        <template v-slot:item="data">
+          <template v-if="typeof data.item !== 'object'">
+            <v-list-item-content v-text="data.item"></v-list-item-content>
+          </template>
+          <template v-else>
+            <v-list-item-avatar>
+              <img :src="data.item.avatar">
+            </v-list-item-avatar>
+            <v-list-item-content>
+              <v-list-item-title v-html="data.item.username"></v-list-item-title>
+              <v-list-item-subtitle v-html="data.item.role"></v-list-item-subtitle>
+            </v-list-item-content>
+          </template>
+        </template>
+      </v-autocomplete>
+    </v-col>
 
     <vue-editor
       ref="quillContainer"
@@ -134,6 +181,8 @@ export default {
     ],
       color:['success','warning','red'],
       files: [],
+      agents:[],
+      agentSelected:[],
       Attachment:[],
       random: [],
       customToolbar: [
@@ -153,6 +202,10 @@ export default {
   },
 
   methods: {
+    remove (item) {
+      const index = this.agentSelected.indexOf(item.username)
+      if (index >= 0) this.agentSelected.splice(index, 1)
+    },
     nextStep() {
 
       this.EnquiryCategorySelect = true
@@ -243,6 +296,8 @@ export default {
         Attachments: JSON.stringify(this.Attachment),
         PriorityLevel:this.ticketPriority,
         EnquiryId:this.SelectedEnquiry,
+        AgentAddressed:this.agentSelected
+
 
       }
 
@@ -277,7 +332,9 @@ export default {
     this.GetEnquiriesData().then(() => {
       this.EnquiriesComboBox = this.AllEnquiriesData
     })
-
+    this.$postRepository.GetAllAgents.all().then((res)=>{
+      this.agents=res
+    })
   }
 }
 </script>
