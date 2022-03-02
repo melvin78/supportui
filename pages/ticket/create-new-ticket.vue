@@ -296,8 +296,7 @@ export default {
         Attachments: JSON.stringify(this.Attachment),
         PriorityLevel:this.ticketPriority,
         EnquiryId:this.SelectedEnquiry,
-        AgentAddressed:this.agentSelected
-
+        AgentAddressed:this.agentSelected.length > 0 ? this.agentSelected:[]
 
       }
 
